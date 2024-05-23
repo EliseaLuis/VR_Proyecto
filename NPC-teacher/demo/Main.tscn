@@ -1,0 +1,328 @@
+[gd_scene load_steps=30 format=3 uid="uid://d3hc36vqwunkv"]
+
+[ext_resource type="PackedScene" path="res://demo/player/VR_Player.tscn" id="1"]
+[ext_resource type="PackedScene" uid="uid://ca536csnc1ewl" path="res://assets/models/kenney/kenney_conveyor-kit/Models/GLTF format/structure-window-wide.glb" id="4"]
+[ext_resource type="PackedScene" uid="uid://b0rm30dy3oejy" path="res://assets/models/kenney/kenney_conveyor-kit/Models/GLTF format/structure-wall.glb" id="7"]
+[ext_resource type="PackedScene" uid="uid://c8hdb70ajaji4" path="res://assets/models/kenney/kenney_conveyor-kit/Models/GLTF format/structure-corner-inner.glb" id="8"]
+[ext_resource type="PackedScene" uid="uid://bcnpyauc1w220" path="res://assets/models/kenney/kenney_conveyor-kit/Models/GLTF format/door.glb" id="10"]
+[ext_resource type="PackedScene" uid="uid://do2vvfk6afgyo" path="res://assets/models/kenney/kenney_conveyor-kit/Models/GLTF format/top-large.glb" id="12"]
+[ext_resource type="PackedScene" uid="uid://bne57je8sgsrd" path="res://assets/models/gdquest/mannequiny-0.3.0.glb" id="16"]
+[ext_resource type="Script" path="res://assets/models/gdquest/mannequiny-0.3.0.gd" id="17"]
+[ext_resource type="Script" path="res://demo/Main.gd" id="18"]
+[ext_resource type="FontFile" path="res://fonts/droid-sans/DroidSans.tres" id="19"]
+[ext_resource type="AudioStream" uid="uid://c03ycwqx0ewn2" path="res://assets/sounds/freesound.org/659965__beussa__breathingmachine.mp3" id="20"]
+[ext_resource type="AudioStream" uid="uid://bkoowp7l487q8" path="res://assets/sounds/freesound.org/677227__davilca__sfx_factory_power_1.mp3" id="21"]
+[ext_resource type="AudioStream" uid="uid://c55nbbc05mmff" path="res://assets/sounds/freesound.org/563649__jecky1000__castle-hill-pud-30102020.mp3" id="22"]
+[ext_resource type="PackedScene" path="res://addons/godot-gpt-35-turbo/GodotGPT35Turbo.tscn" id="23"]
+[ext_resource type="PackedScene" path="res://scripts/Godot-AI-NPC-Controller.tscn" id="24"]
+[ext_resource type="PackedScene" path="res://addons/godot-witai/VRVoiceControl-WitAI.tscn" id="25"]
+[ext_resource type="Script" path="res://addons/godot-tts/TTS.gd" id="26"]
+[ext_resource type="Script" path="res://scripts/npc_interaction_area.gd" id="27"]
+[ext_resource type="FontFile" uid="uid://dwycvub0k2iwk" path="res://fonts/droid-sans/DroidSans.ttf" id="28"]
+[ext_resource type="PackedScene" path="res://addons/godot-convAI/GodotConvAI.tscn" id="29"]
+[ext_resource type="PackedScene" path="res://addons/godot-elevenlabs-tts/ElevenLabsTTS.tscn" id="30"]
+
+[sub_resource type="BoxMesh" id="1"]
+size = Vector3(10, 0.25, 10)
+
+[sub_resource type="BoxShape3D" id="2"]
+margin = 0.01
+size = Vector3(10, 0.25, 10)
+
+[sub_resource type="BoxShape3D" id="6"]
+size = Vector3(1, 3, 6)
+
+[sub_resource type="BoxShape3D" id="7"]
+size = Vector3(8, 3, 1)
+
+[sub_resource type="CapsuleShape3D" id="5"]
+radius = 0.3
+height = 1.5
+
+[sub_resource type="BoxShape3D" id="3"]
+size = Vector3(3, 3, 3)
+
+[sub_resource type="CapsuleShape3D" id="4"]
+radius = 0.3
+height = 1.5
+
+[sub_resource type="FontFile" id="11"]
+fallbacks = Array[Font]([ExtResource("28")])
+cache/0/32/0/ascent = 0.0
+cache/0/32/0/descent = 0.0
+cache/0/32/0/underline_position = 0.0
+cache/0/32/0/underline_thickness = 0.0
+cache/0/32/0/scale = 1.0
+cache/0/32/0/glyphs/0/advance = Vector2(0, 0)
+cache/0/32/0/glyphs/0/offset = Vector2(0, 0)
+cache/0/32/0/glyphs/0/size = Vector2(0, 0)
+cache/0/32/0/glyphs/0/uv_rect = Rect2(0, 0, 0, 0)
+cache/0/32/0/glyphs/0/texture_idx = -1
+cache/0/32/0/kerning_overrides/32/0 = Vector2(0, 0)
+cache/0/32/0/kerning_overrides/32/12 = Vector2(0, 0)
+cache/0/32/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/32/12/glyphs/0/offset = Vector2(0, 0)
+cache/0/32/12/glyphs/0/size = Vector2(0, 0)
+cache/0/32/12/glyphs/0/uv_rect = Rect2(0, 0, 0, 0)
+cache/0/32/12/glyphs/0/texture_idx = -1
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/16/0/kerning_overrides/32/0 = Vector2(0, 0)
+cache/0/16/0/kerning_overrides/32/12 = Vector2(0, 0)
+cache/0/16/0/kerning_overrides/16/0 = Vector2(0, 0)
+
+[node name="Main" type="Node3D"]
+script = ExtResource("18")
+
+[node name="Sounds" type="Node" parent="."]
+
+[node name="Ambient" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("22")
+autoplay = true
+
+[node name="Noise1" type="AudioStreamPlayer3D" parent="Sounds"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.90095, 0.940986, 3.17191)
+stream = ExtResource("21")
+autoplay = true
+max_distance = 5.0
+
+[node name="Noise2" type="AudioStreamPlayer3D" parent="Sounds"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.47752, 0.807715, -0.995072)
+stream = ExtResource("20")
+autoplay = true
+max_distance = 5.0
+
+[node name="Player" parent="." instance=ExtResource("1")]
+
+[node name="Floor" type="MeshInstance3D" parent="."]
+mesh = SubResource("1")
+
+[node name="StaticBody" type="StaticBody3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.01, 0)
+
+[node name="CollisionShape" type="CollisionShape3D" parent="Floor/StaticBody"]
+shape = SubResource("2")
+
+[node name="Building" type="Node3D" parent="."]
+
+[node name="walls" type="Node3D" parent="Building"]
+
+[node name="structure-wall" parent="Building/walls" instance=ExtResource("7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, -2.5)
+
+[node name="structure-wall3" parent="Building/walls" instance=ExtResource("7")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 2.98909, 0.1, -1.53362)
+
+[node name="structure-wall4" parent="Building/walls" instance=ExtResource("7")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 2.98909, 0.1, -0.577312)
+
+[node name="structure-wall5" parent="Building/walls" instance=ExtResource("7")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 2.98909, 0.1, 0.391256)
+
+[node name="structure-wall5" parent="Building/walls/structure-wall5" instance=ExtResource("7")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 1.90364, 0.00391374, 0.992711)
+
+[node name="structure-wall5" parent="Building/walls/structure-wall5/structure-wall5" instance=ExtResource("7")]
+transform = Transform3D(0.9997, 0, 0.0244845, 0, 1, 0, -0.0244845, 0, 0.9997, 1, 0.00391374, -0.0160854)
+
+[node name="structure-wall6" parent="Building/walls/structure-wall5/structure-wall5" instance=ExtResource("7")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 5.86562, 0.00391374, 2.88273)
+
+[node name="structure-wall5" parent="Building/walls/structure-wall5/structure-wall5/structure-wall6" instance=ExtResource("7")]
+transform = Transform3D(0.9997, 0, 0.0244845, 0, 1, 0, -0.0244845, 0, 0.9997, 1, 0.00391374, -0.0160854)
+
+[node name="structure-wall6" parent="Building/walls" instance=ExtResource("7")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 2.98909, 0.1, 1.32216)
+
+[node name="structure-wall2" parent="Building/walls" instance=ExtResource("7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.96901, 0.1, -2.5)
+
+[node name="structure-window-wide" parent="Building/walls" instance=ExtResource("4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.49637, 0.1, -2.5)
+
+[node name="structure-window-wide2" parent="Building/walls" instance=ExtResource("4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.47816, 0.1, -2.5)
+
+[node name="structure-window-wide3" parent="Building/walls" instance=ExtResource("4")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -3.96131, 0.1, 0.890151)
+
+[node name="structure-corner-inner" parent="Building/walls" instance=ExtResource("8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.96, 0.1, -2.5)
+
+[node name="structure-corner-inner4" parent="Building/walls" instance=ExtResource("8")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -3.96, 0.1, 2.32541)
+
+[node name="structure-corner-inner2" parent="Building/walls" instance=ExtResource("8")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 2.98472, 0.1, -2.5)
+
+[node name="structure-corner-inner3" parent="Building/walls" instance=ExtResource("8")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 2.98751, 0.1, 2.29117)
+
+[node name="structure-wall7" parent="Building/walls" instance=ExtResource("7")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.1525, 0.101128, 2.27312)
+
+[node name="structure-wall8" parent="Building/walls" instance=ExtResource("7")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -3.12883, 0.101128, 2.31488)
+
+[node name="door" parent="Building/walls" instance=ExtResource("10")]
+transform = Transform3D(-1.5, 0, -2.26494e-07, 0, 1.5, 0, 2.26494e-07, 0, -1.5, -0.910367, 0.0788178, 2.92499)
+
+[node name="door2" parent="Building/walls" instance=ExtResource("10")]
+transform = Transform3D(-1.5, 0, -2.26494e-07, 0, 1.5, 0, 2.26494e-07, 0, -1.5, -2.07547, 0.0788178, 2.92499)
+
+[node name="top-large" parent="Building" instance=ExtResource("12")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -1.29272, 2.10837, 2.95485)
+
+[node name="top-large2" parent="Building" instance=ExtResource("12")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -1.69472, 2.10837, 2.95485)
+
+[node name="top-large3" parent="Building" instance=ExtResource("12")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 3.12553, 0)
+
+[node name="SpotLight" type="SpotLight3D" parent="Building"]
+transform = Transform3D(-0.998963, 0, -0.0455374, -0.0125648, 0.96118, 0.275636, 0.0437696, 0.275923, -0.960183, 1.51787, 2.12307, -3.18155)
+light_color = Color(0.992157, 0.952941, 0.556863, 1)
+light_energy = 10.0
+light_indirect_energy = 0.0
+spot_range = 10.0
+
+[node name="SpotLight2" type="SpotLight3D" parent="Building"]
+transform = Transform3D(-0.998963, -1.86071e-09, -0.0455374, -0.0211614, 0.885467, 0.464221, 0.0403218, 0.464703, -0.884548, -1.51136, 2.06798, -3.18851)
+light_color = Color(0.992157, 0.952941, 0.556863, 1)
+light_energy = 10.0
+light_indirect_energy = 0.0
+spot_range = 10.0
+
+[node name="Colliders" type="Node3D" parent="Building"]
+
+[node name="Wall1" type="StaticBody3D" parent="Building/Colliders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.98297, 1.65852, 0)
+
+[node name="CollisionShape" type="CollisionShape3D" parent="Building/Colliders/Wall1"]
+shape = SubResource("6")
+
+[node name="Wall2" type="StaticBody3D" parent="Building/Colliders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.87083, 1.62879, 0)
+
+[node name="CollisionShape" type="CollisionShape3D" parent="Building/Colliders/Wall2"]
+shape = SubResource("6")
+
+[node name="Wall3" type="StaticBody3D" parent="Building/Colliders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.286478, 1.65294, -3.48986)
+
+[node name="CollisionShape" type="CollisionShape3D" parent="Building/Colliders/Wall3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0658606, 0, 0)
+shape = SubResource("7")
+
+[node name="Wall4" type="StaticBody3D" parent="Building/Colliders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.293998, 1.65177, 3.16417)
+
+[node name="CollisionShape" type="CollisionShape3D" parent="Building/Colliders/Wall4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0658606, 0, 0)
+shape = SubResource("7")
+
+[node name="Barriers" type="StaticBody3D" parent="Building/Colliders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.98993, 0.63041, 0.733003)
+
+[node name="Conveyor" type="StaticBody3D" parent="Building/Colliders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.64949, 0.900596, 0.828486)
+
+[node name="Boxes" type="StaticBody3D" parent="Building/Colliders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.76284, 0.657233, 2.04093)
+
+[node name="AI_NPC" type="Node3D" parent="."]
+transform = Transform3D(0.00153585, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0.00153585, -3.52453, 0.139575, 0)
+
+[node name="NPC" parent="AI_NPC" instance=ExtResource("16")]
+script = ExtResource("17")
+
+[node name="KinematicBody" type="CharacterBody3D" parent="AI_NPC/NPC"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0470702, 1.01376, -7.22408e-05)
+
+[node name="CollisionShape" type="CollisionShape3D" parent="AI_NPC/NPC/KinematicBody"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("5")
+
+[node name="npc_dialogue_enabled_area" type="Area3D" parent="AI_NPC"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.38696e-05, 0.978153, 0.0350752)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape" type="CollisionShape3D" parent="AI_NPC/npc_dialogue_enabled_area"]
+shape = SubResource("3")
+
+[node name="npc_pointer_interaction_area" type="Area3D" parent="AI_NPC"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000232985, 1.0048, 0.151697)
+collision_layer = 4
+script = ExtResource("27")
+
+[node name="CollisionShape" type="CollisionShape3D" parent="AI_NPC/npc_pointer_interaction_area"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("4")
+
+[node name="InteractLabel3D" type="Label3D" parent="AI_NPC/npc_pointer_interaction_area"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000867405, 0.342965, 0.564771)
+visible = false
+pixel_size = 0.001
+billboard = 2
+text = "Press Trigger to talk."
+font = ExtResource("19")
+
+[node name="InstructionsLabel3D" type="Label3D" parent="."]
+transform = Transform3D(0.618559, 0, 0.785738, 0, 1, 0, -0.785738, 0, 0.618559, -2.48897, 1.55772, -1.34009)
+pixel_size = 0.001
+text = "Camine cerca del NPC y presione el botón B/Y o apunte al NPC y presione el botón disparador para iniciar el micrófono para hablar.    Presione el botón nuevamente para dejar de hablar y enviarlo a procesamiento."
+font = ExtResource("19")
+horizontal_alignment = 3
+width = 1000.0
+
+[node name="ExitLabel3D" type="Label3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.892779, 1.78868, 2.9187)
+pixel_size = 0.001
+modulate = Color(0.882353, 0.0431373, 0.160784, 1)
+text = "EXIT
+Presione ambos botones Grip juntos para salir."
+font = SubResource("11")
+width = 600.0
+
+[node name="ExitLabel3D2" type="Label3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -2.04761, 1.78873, 2.9187)
+pixel_size = 0.001
+modulate = Color(0.882353, 0.0431373, 0.160784, 1)
+text = "...O decirle \"renuncio\" a Bob."
+font = SubResource("11")
+width = 600.0
+
+[node name="Godot-AI-NPC-Controller" parent="." instance=ExtResource("24")]
+text_to_speech_choice = 2
+ai_brain_type_choice = 1
+
+[node name="VRVoiceControl-WitAI" parent="Godot-AI-NPC-Controller" instance=ExtResource("25")]
+
+[node name="GodotGPT35Turbo" parent="Godot-AI-NPC-Controller" instance=ExtResource("23")]
+
+[node name="Text-to-Speech" type="Node" parent="Godot-AI-NPC-Controller"]
+script = ExtResource("26")
+
+[node name="InteractLabel3D" type="Label3D" parent="Godot-AI-NPC-Controller"]
+transform = Transform3D(0.0198728, 0.257663, 0.966031, 0.0136997, 0.96606, -0.257953, -0.999709, 0.0183605, 0.0156684, -3.06764, 2.15063, 9.31323e-10)
+visible = false
+pixel_size = 0.001
+billboard = 2
+text = "In NPC proximity. Press B / Y to talk."
+font = ExtResource("19")
+
+[node name="MicActiveLabel3D" type="Label3D" parent="Godot-AI-NPC-Controller"]
+transform = Transform3D(0.602595, 0, 0.798047, 0, 1, 0, -0.798047, 0, 0.602595, -2.48017, 1.21867, -1.32777)
+visible = false
+pixel_size = 0.001
+modulate = Color(0.882353, 0.0431373, 0.160784, 1)
+text = "Mic recording..."
+font = SubResource("11")
+
+[node name="GodotConvAI" parent="Godot-AI-NPC-Controller" instance=ExtResource("29")]
+
+[node name="ElevenLabsTTS" parent="Godot-AI-NPC-Controller" instance=ExtResource("30")]
